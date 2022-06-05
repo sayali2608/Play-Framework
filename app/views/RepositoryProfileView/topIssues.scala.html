@@ -1,0 +1,39 @@
+
+@(organization:String, repos:String, top20issues :List[model.Issues])
+<html>
+<head>
+<title>Top 20 Issues</title>
+<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")"> 
+<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/userProfileStyle.css")"> 
+</head>
+<body>
+<h2><a href="@controllers.RepositoryIssuesController.routes.RepositoryIssuesController.repositoryIssues(organization,repos)" style="color: lightblue;">Repository Stats</a></h2>
+<div class="container">
+<h2>Issues for @organization] on [@repos]</h2>
+<table>
+
+<tr>
+<th>S.No</th>
+<th> Title</th>
+<th> Created</th>
+<th> Updated</th>
+
+</tr>
+
+@for((issue,index) <- top20issues.zipWithIndex){
+
+<tr>
+<td>@{index+1}</td>
+<td>@issue.getTitle()</td>
+<td>@issue.getCreated_at()</td>
+<td>@issue.getUpdated_at()</td>
+
+</tr>
+}
+
+</table>
+</div>
+</div>
+
+</body>
+</html>

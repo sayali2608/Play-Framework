@@ -1,0 +1,46 @@
+@import model.KeywordModel
+@import model.Repositories
+@import java.util
+@import controllers.UserProfileController.UserProfileController
+@(searchForm : Form[KeywordModel], repos: util.Map[String, util.List[Repositories]])
+@import helper._
+<!DOCTYPE html>
+<html>
+<head>
+<title>GITTERIFIC</title>
+<link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/main.css")">
+<meta http-equiv="refresh" content="5">
+<style>
+
+    </style>
+</head>
+
+<body data-ws-url="@routes.WebSocketController.ws.webSocketURL(request)">
+    <div class="background-primary header">
+        <h1>Welcome to Gitterific</h1>
+        <centre><div class="search">
+                    @helper.form(action = routes.HomeController.getSearchResult()){
+                        <input type="text" id="keyword" name="keyword">
+                        <input type="submit" value="Search for the keyword">
+                    }
+
+        </div></centre>
+        
+    </div>
+ 	<div class=" background-secondary main-search">
+            <div class="wrap">
+   	</div>
+  	<div>
+  	<div style="background:#1a202c;padding:10px">
+  	@for(mapElement <- repos.entrySet()) {
+            &nbsp;<h3>@mapElement.getKey()</h3>
+            <ol>
+            @for(repo <- mapElement.getValue()){
+            	<li>User: <a style="color:lightblue" href="@controllers.UserProfileController.routes.UserProfileController.getUserRepos(repo.getOwner.getLogin)">@repo.getOwner.getLogin</a> Repository: <a style="color:lightblue" href="@controllers.RepositoryProfileController.routes.RepositoryProfileController.getCollaborators(repo.getOwner.getLogin, repo.getName)">@repo.getFull_name</a> Topic: @for(topic <- repo.getTopics){<a style="color:lightblue" href="@controllers.TopicsController.routes.TopicsController.getSearchResult(topic)"> @topic </a> &nbsp;}</li>
+    		}
+            </ol>
+    }
+  	</div>
+</body>
+
+</html>

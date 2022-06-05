@@ -1,0 +1,28 @@
+
+    @import model.Repositories
+    @import java.util
+    @(repos: util.List[Repositories])
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>GITTERIFIC</title>
+        <link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/main.css")">
+        <style>
+
+    </style>
+    </head>
+
+    <body>
+        <div class="background-primary header">
+            <h1>Topics</h1>
+        </div>
+        <div class=" background-secondary main-search">
+            <div class="wrap">
+    </div>
+            @for(repo <- repos) {
+                <li><a href="#" style="color: lightblue">@repo.getFull_name</a></li>
+            }
+        </div>
+    </body>
+
+</html>

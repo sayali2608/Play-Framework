@@ -1,0 +1,73 @@
+@import model.Repositories
+@import model.UserProfileModel
+@import model.RepositoryIssuesModel
+@import model.TopicsModel
+@import model.ContributionsModel
+ @import java.util
+ 
+@(repos: Repositories,organization:String,collabArray:String)
+
+
+<html>
+	<link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/main.css")">
+	<link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/userProfileStyle.css")"> 
+	
+	
+	<head>
+		<title>Repository Details</title>
+	</head>
+	<body class = "background">
+		<div class="container">
+    <div class="main-body" style = "display:flex">
+          <!-- /Breadcrumb -->
+    <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex flex-column align-items-center text-center">
+                  
+                    <div class="mt-3">
+                     <h2>Repository Profile</center></h2>
+                      <img src="@repos.getOwner.getAvatar_url" alt="Admin" alt="avatar">
+                      <p class="text-secondary mb-1">Repository Name : @repos.getName</p>
+                      <p class="text-secondary mb-1">Owner : @repos.getOwner.getLogin</p>
+                      <p class = "text-secondary mb-1">Repository Issues: <a href="repositoryissues/repos/@repos.getOwner.getLogin/@repos.getName/issues">"https://api.github.com/repos/@repos.getOwner.getLogin/@repos.getName/issues"></a></p>
+                      <p class="text-secondary mb-1">Description : @repos.getDescription</p>
+                      <p class="text-secondary mb-1">Created Date : @repos.getCreated_at</p>
+                      <p class="text-secondary mb-1">Last Updated At : @repos.getUpdated_at</p>
+                      <p class="text-secondary mb-1">Number of Watchers : @repos.getWatchers_count</p>
+                       <p class="text-secondary mb-1">Number of Forks : @repos.getForks_count</p>
+                        <p class="text-secondary mb-1">Number of Open Issues :@repos.getOpen_issues_count</p>
+                       <h2>Contributors</center></h2>
+                      
+       
+                @for( C<- collabArray.split(",")){
+          <li><a href="@controllers.UserProfileController.routes.UserProfileController.getUserRepos(C)" style="color: lightblue;">@C</a></li>
+            
+           
+           }
+           
+
+<h2><a href="@controllers.RepositoryProfileController.routes.RepositoryProfileController.getRepoIssues(organization,repos.getName)" style="color: lightblue;">Repository Issues</a></h2>
+
+            
+         
+                       
+                        </div>
+                 <div>      
+          
+         
+           
+ 
+           
+        </div>
+                      
+                 </div>
+                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+	</body>
+</html>
